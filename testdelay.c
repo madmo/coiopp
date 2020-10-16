@@ -17,7 +17,7 @@
 #include "coio.h"
 
 void
-_t1(void* arg)
+_t1()
 {
 	printf("going to sleep 1000ms (1s)\n");
 	coio_delay(1000);
@@ -30,7 +30,9 @@ main(int argc, char** argv)
 	(void) argc;
 	(void) argv;
 
-	coio_create("t1", _t1, NULL, 0x8000);
+	coio_init();
+
+	coio_create("t1", _t1, 0x8000);
 
 	if (coio_main() < 0) {
 		printf("Deadlocked\n");

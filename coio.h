@@ -25,6 +25,8 @@ typedef unsigned long long uvlong;
 
 extern CoioTask* coio_current;
 
+void
+coio_init();
 int
 coio_main();
 int

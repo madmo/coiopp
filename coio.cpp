@@ -82,11 +82,17 @@ _process_events()
 	}
 }
 
-int
-coio_main()
+void
+coio_init()
 {
 	/* initialize empty ctx for scheduler */
 	coio_sched_ctx = co_active();
+}
+
+int
+coio_main()
+{
+	coio_init();
 
 	/* scheduler mainloop */
 	for (;;) {

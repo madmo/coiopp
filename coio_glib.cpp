@@ -137,7 +137,7 @@ coio_source_finalize(GSource* source)
 GSource*
 coio_gsource_create()
 {
-	coio_sched_ctx = co_active();
+	coio_init();
 
 	static GSourceFuncs funcs = { coio_source_prepare,
 		                           coio_source_check,
