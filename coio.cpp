@@ -324,3 +324,28 @@ coio_active_throw()
 		throw std::logic_error("Not inside coroutine");
 	}
 }
+
+CoioMutex::CoioMutex() {
+	owner = nullptr;
+}
+
+void
+CoioMutex::lock() {
+	if (owner == nullptr) {
+		owner = coio_current;
+	} else {
+		waiting.push_back(coio_current);
+		coio_delay(-1);
+	}
+}
+
+void
+CoioMutex::unlock() {
+	if (!waiting.empty()) {
+		owner = waiting.back();
+		waiting.pop_back();
+		coio_ready(owner);
+	} else {
+		owner = nullptr;
+	}
+}

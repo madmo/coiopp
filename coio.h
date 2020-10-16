@@ -17,6 +17,7 @@
 #define COIO_H
 
 #include <functional>
+#include <vector>
 
 typedef struct CoioTask CoioTask;
 typedef std::function<void()> coio_func;
@@ -43,5 +44,19 @@ bool
 coio_active();
 void
 coio_active_throw();
+
+class CoioMutex {
+	CoioTask* owner;
+	std::vector<CoioTask*> waiting;
+public:
+	CoioMutex();
+	~CoioMutex() = default;
+
+	CoioMutex(const CoioMutex&) = delete;
+	CoioMutex& operator=(const CoioMutex&) = delete;
+
+	void lock();
+	void unlock();
+};
 
 #endif
